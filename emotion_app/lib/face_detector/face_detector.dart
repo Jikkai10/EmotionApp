@@ -1,11 +1,6 @@
-import 'dart:ui' as ui;
-
 import 'package:camera/camera.dart';
-import 'package:emotion_app/face_detector/util/decodeImage.dart';
-import 'package:emotion_app/face_detector/util/img_to_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
-import 'package:image/image.dart' as img;
 
 import 'detector.dart';
 import 'face_painter.dart';

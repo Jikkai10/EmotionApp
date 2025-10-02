@@ -98,14 +98,15 @@ class FaceDetectorPainter extends CustomPainter {
       
       final textPainter = TextPainter(
         text: TextSpan(
-          text: 'Emotion: ${emotions[emotionIndex]}',
+          text: '${emotions[emotionIndex]}',
           style: TextStyle(color: colors[emotionIndex], fontSize: 24),
         ),
         textDirection: TextDirection.ltr,
       );
       textPainter.layout(minWidth: 0, maxWidth: size.width);
-      textPainter.paint(canvas, Offset(rect.right, rect.top - 20));
-     
+      double center = (rect.left + rect.right).abs() / 2;
+      textPainter.paint(canvas, Offset(center, rect.top - 20));
+
       paint1.color = colors[emotionIndex];
       canvas.drawRect(
         rect,
