@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
@@ -8,7 +7,7 @@ import 'package:image/image.dart' as img;
 import 'util/coordinates_translator.dart';
 import 'util/rect_from_faces.dart';
 import 'model_prediction.dart';
-import 'util/decodeImage.dart';
+import 'util/decode_image.dart';
 
 class FaceDetectorPainter extends CustomPainter {
   FaceDetectorPainter(

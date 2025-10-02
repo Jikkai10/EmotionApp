@@ -36,8 +36,7 @@ img.Image decodeBGRA8888(InputImage image) {
         return img.copyRotate(outImg, angle: 180);
       case InputImageRotation.rotation270deg:
         return img.copyRotate(outImg, angle: 270);
-      default:
-        return outImg; // Default case to return the image without rotation
+      
     }
   }
   
@@ -105,5 +104,5 @@ img.Image decodeBGRA8888(InputImage image) {
       case InputImageRotation.rotation270deg:
         return img.copyRotate(outImg, angle: 270);
     }
-    return outImg; 
+ 
   }

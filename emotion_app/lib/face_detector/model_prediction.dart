@@ -5,7 +5,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 
 class ModelPrediction {
-  late Interpreter _interpreter;
+  late Interpreter? _interpreter;
 
   ModelPrediction() {
     _loadModel();
@@ -14,9 +14,9 @@ class ModelPrediction {
   void _loadModel() async {
     try {
       _interpreter = await Interpreter.fromAsset('assets/model.tflite');
-      print('Model loaded successfully');
+      
     } catch (e) {
-      print('Error loading model: $e');
+      _interpreter = null;
     }
   }
   List<double> predictImage(img.Image image) {
@@ -42,8 +42,10 @@ class ModelPrediction {
     }
     
     var output = List.filled(1 * 5, 0.0).reshape([1, 5]);
-    
-    _interpreter.run(input.reshape([1, targetSize, targetSize, 1]), output);
+    if (_interpreter == null) {
+      return List.filled(5, 0.0);
+    }
+    _interpreter!.run(input.reshape([1, targetSize, targetSize, 1]), output);
 
     return output[0];
 
