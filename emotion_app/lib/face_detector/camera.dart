@@ -6,20 +6,17 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 class CameraView extends StatefulWidget {
-  CameraView(
-      {Key? key,
+  const CameraView(
+      {super.key,
       required this.customPaint,
       required this.onImage,
       this.onCameraFeedReady,
-      this.onDetectorViewModeChanged,
       this.onCameraLensDirectionChanged,
-      this.initialCameraLensDirection = CameraLensDirection.back})
-      : super(key: key);
+      this.initialCameraLensDirection = CameraLensDirection.back});
 
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
   final VoidCallback? onCameraFeedReady;
-  final VoidCallback? onDetectorViewModeChanged;
   final Function(CameraLensDirection direction)? onCameraLensDirectionChanged;
   final CameraLensDirection initialCameraLensDirection;
 
@@ -93,7 +90,6 @@ class _CameraViewState extends State<CameraView> {
           ),
           _backButton(),
           _switchLiveCameraToggle(),
-          _detectionViewModeToggle(),
           _zoomControl(),
           _exposureControl(),
         ],
@@ -114,24 +110,6 @@ class _CameraViewState extends State<CameraView> {
             child: Icon(
               Icons.arrow_back_ios_outlined,
               size: 20,
-            ),
-          ),
-        ),
-      );
-
-  Widget _detectionViewModeToggle() => Positioned(
-        bottom: 8,
-        left: 8,
-        child: SizedBox(
-          height: 50.0,
-          width: 50.0,
-          child: FloatingActionButton(
-            heroTag: Object(),
-            onPressed: widget.onDetectorViewModeChanged,
-            backgroundColor: Colors.black54,
-            child: Icon(
-              Icons.photo_library_outlined,
-              size: 25,
             ),
           ),
         ),

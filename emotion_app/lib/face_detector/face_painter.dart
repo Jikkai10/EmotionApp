@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:ui';
+import 'dart:ui' as ui;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
@@ -13,7 +13,6 @@ import 'util/decodeImage.dart';
 class FaceDetectorPainter extends CustomPainter {
   FaceDetectorPainter(
     this.faces,
-    //this.predictions,
     this.imageSize,
     this.rotation,
     this.cameraLensDirection,
@@ -22,7 +21,6 @@ class FaceDetectorPainter extends CustomPainter {
   );
 
   final List<Face> faces;
-  //final List<int> predictions;
   final InputImage inputImage;
   final ModelPrediction modelPrediction;
   final Size imageSize;
@@ -43,8 +41,6 @@ class FaceDetectorPainter extends CustomPainter {
   }
   List<String> emotions = [
     'Angry',
-    'Disgust',
-    'Fear',
     'Happy',
     'Sad',
     'Surprise',
@@ -52,15 +48,13 @@ class FaceDetectorPainter extends CustomPainter {
   ];
   List<Color> colors = [
     Colors.red,
-    Colors.green,
-    Colors.blue,
     Colors.yellow,
     Colors.purple,
     Colors.orange,
     Colors.grey
   ];
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size)  async {
     final Paint paint1 = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
@@ -78,22 +72,7 @@ class FaceDetectorPainter extends CustomPainter {
         rotation,
         cameraLensDirection,
       );
-      // final paragraph = ParagraphBuilder(
-      //   ParagraphStyle(
-      //     textAlign: TextAlign.left,
-      //     fontSize: 12,
-      //     textDirection: TextDirection.ltr,
-      //   ),
-      // )
-      //   ..addText('Emotion: ');
-      // final offset = Offset(rect.left, rect.top - 20);
-      // canvas.drawParagraph(paragraph.build(), offset);
-      // final img.Image originalImage = img.Image.fromBytes(
-      //   width: inputImage.metadata!.size.width.toInt(),
-      //   height: inputImage.metadata!.size.height.toInt(),
-      //   bytes: inputImage.bytes!.buffer,
-      //   format: img.Format.uint8,
-      //   );
+      
       img.Image decodedImage;
       if (inputImage.metadata?.format == InputImageFormat.bgra8888) {
         decodedImage = decodeBGRA8888(inputImage);
@@ -102,19 +81,19 @@ class FaceDetectorPainter extends CustomPainter {
       } else {
         return;
       }
-
-      //img.Image resizedImage = img.copyResize(decodedImage, width: inputImage.metadata!.size.width.toInt(), height: inputImage.metadata!.size.height.toInt());
-      // Crop the image to the detected face rectangle
       
       final img.Image croppedImage = img.copyCrop(
           decodedImage,
-          x: rect.left.toInt(),
-          y: rect.top.toInt(),
-          width: rect.width.toInt().abs(),
-          height: rect.height.toInt().abs(),
+          x: face.boundingBox.left.toInt(),
+          y: face.boundingBox.top.toInt(),
+          width: face.boundingBox.width.toInt().abs(),
+          height: face.boundingBox.height.toInt().abs(),
         );
+      
       final prediction = modelPrediction.predictImage(croppedImage);
-      final emotionIndex = _argmax(prediction); 
+      int emotionIndex = 0;
+      emotionIndex = _argmax(prediction); 
+      
       
       
       final textPainter = TextPainter(
@@ -126,7 +105,7 @@ class FaceDetectorPainter extends CustomPainter {
       );
       textPainter.layout(minWidth: 0, maxWidth: size.width);
       textPainter.paint(canvas, Offset(rect.right, rect.top - 20));
-      
+     
       paint1.color = colors[emotionIndex];
       canvas.drawRect(
         rect,

@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google ML Kit Demo App'),
+        title: Text('Emotion App'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -35,7 +35,7 @@ class Home extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomCard("Face Detection", FaceDetectorView()),
+              CustomCard("Emotion Detection", FaceDetectorView()),
             ],
           ),
         ),

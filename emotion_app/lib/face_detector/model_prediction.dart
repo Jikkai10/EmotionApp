@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 
+
 class ModelPrediction {
   late Interpreter _interpreter;
 
@@ -29,7 +30,7 @@ class ModelPrediction {
 
     final input = Float32List(targetSize * targetSize * 1); // Grayscale
     int pixelIndex = 0;
-
+    
     for (int y = 0; y < targetSize; y++) {
       for (int x = 0; x < targetSize; x++) {
         final pixel = resizedImage.getPixel(x, y);
@@ -40,11 +41,8 @@ class ModelPrediction {
       }
     }
     
-    var output = List.filled(1 * 7, 0.0).reshape([1, 7]);
-    if (_interpreter == null) {
-      print('Interpreter not initialized');
-      return List.filled(7, 0.0);
-    }
+    var output = List.filled(1 * 5, 0.0).reshape([1, 5]);
+    
     _interpreter.run(input.reshape([1, targetSize, targetSize, 1]), output);
 
     return output[0];

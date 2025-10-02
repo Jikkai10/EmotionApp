@@ -1,4 +1,8 @@
+import 'dart:ui' as ui;
+
 import 'package:camera/camera.dart';
+import 'package:emotion_app/face_detector/util/decodeImage.dart';
+import 'package:emotion_app/face_detector/util/img_to_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as img;
@@ -6,8 +10,10 @@ import 'package:image/image.dart' as img;
 import 'detector.dart';
 import 'face_painter.dart';
 import 'model_prediction.dart';
-import 'util/rect_from_faces.dart';
+
 class FaceDetectorView extends StatefulWidget {
+  const FaceDetectorView({super.key});
+
   @override
   State<FaceDetectorView> createState() => _FaceDetectorViewState();
 }
@@ -55,37 +61,15 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
       _text = '';
     });
     final faces = await _faceDetector.processImage(inputImage);
-    List<int> predictions = [];
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
-      // for (final face in faces) {
-      //   Rect rect = rectFromFaces(
-      //     face,
-      //     inputImage.metadata!.size,
-      //     inputImage.metadata!.size,
-      //     inputImage.metadata!.rotation,
-      //     _cameraLensDirection,
-      //   );
-
-      //   final img.Image? originalImage = img.decodeImage(inputImage.bytes!);
-      //   if (originalImage == null) return null;
-  
-      //   // Crop the image to the detected face rectangle
-      //   final img.Image croppedImage = img.copyCrop(
-      //     originalImage,
-      //     x: rect.left.toInt(),
-      //     y: rect.top.toInt(),
-      //     width: rect.width.toInt(),
-      //     height: rect.height.toInt(),
-      //   );
-        
-      //   //final prediction = modelPrediction.predictImage(croppedImage);
-      //   //predictions.add(_argmax(prediction));
-      // }  
+       
+      
+      
+      
       
       final painter = FaceDetectorPainter(
         faces,
-        //predictions,
         inputImage.metadata!.size,
         inputImage.metadata!.rotation,
         _cameraLensDirection,
@@ -99,7 +83,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
         text += 'face: ${face.boundingBox}\n\n';
       }
       _text = text;
-      // TODO: set _customPaint to draw boundingRect on top of image
+      
       _customPaint = null;
     }
     _isBusy = false;

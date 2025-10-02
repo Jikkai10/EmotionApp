@@ -11,6 +11,8 @@ BATCH_SIZE=32
 
 
 # data: https://www.kaggle.com/datasets/msambare/fer2013
+# dataset with 5 emotions: angry, happy, sad, surprise, neutral (remove disgust and fear)
+# 3171 training samples and 831 validation samples for each emotion
 train_data_dir='data/train/'
 validation_data_dir='data/test/'
 
@@ -83,7 +85,7 @@ model.add(BatchNormalization())
 model.add(Activation('relu'))
 model.add(Dropout(0.2))
 
-model.add(Dense(7, activation='softmax'))
+model.add(Dense(5, activation='softmax'))
 
 model.compile(optimizer = "adam", loss='categorical_crossentropy', metrics=['accuracy'])
 

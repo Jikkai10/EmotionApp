@@ -41,6 +41,7 @@ img.Image decodeBGRA8888(InputImage image) {
     }
   }
   
+  
   img.Image decodeYUV420SP(InputImage image) {
     final width = image.metadata!.size.width.toInt();
     final height = image.metadata!.size.height.toInt();
@@ -94,15 +95,15 @@ img.Image decodeBGRA8888(InputImage image) {
       }
     }
 
-    // switch (image.metadata!.rotation) {
-    //   case InputImageRotation.rotation0deg:
-    //     return img.copyRotate(outImg, angle: 0);
-    //   case InputImageRotation.rotation90deg:
-    //     return img.copyRotate(outImg, angle: 90);
-    //   case InputImageRotation.rotation180deg:
-    //     return img.copyRotate(outImg, angle: 180);
-    //   case InputImageRotation.rotation270deg:
-    //     return img.copyRotate(outImg, angle: 270);
-    // }
+    switch (image.metadata!.rotation) {
+      case InputImageRotation.rotation0deg:
+        return img.copyRotate(outImg, angle: 0);
+      case InputImageRotation.rotation90deg:
+        return img.copyRotate(outImg, angle: 90);
+      case InputImageRotation.rotation180deg:
+        return img.copyRotate(outImg, angle: 180);
+      case InputImageRotation.rotation270deg:
+        return img.copyRotate(outImg, angle: 270);
+    }
     return outImg; 
   }
