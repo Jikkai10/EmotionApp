@@ -3,11 +3,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
-import 'package:image/image.dart' as img;
 import 'util/coordinates_translator.dart';
 import 'util/rect_from_faces.dart';
-import 'model_prediction.dart';
-import 'util/decode_image.dart';
 
 class FaceDetectorPainter extends CustomPainter {
   FaceDetectorPainter(
@@ -15,13 +12,11 @@ class FaceDetectorPainter extends CustomPainter {
     this.imageSize,
     this.rotation,
     this.cameraLensDirection,
-    this.inputImage,
-    this.modelPrediction,
+    this.predictions,
   );
 
   final List<Face> faces;
-  final InputImage inputImage;
-  final ModelPrediction modelPrediction;
+  final Map<int, Object> predictions;
   final Size imageSize;
   final InputImageRotation rotation;
   final CameraLensDirection cameraLensDirection;
@@ -71,33 +66,16 @@ class FaceDetectorPainter extends CustomPainter {
         rotation,
         cameraLensDirection,
       );
+      if(predictions.isEmpty) continue;
+      if(predictions.length < faces.length) continue;
       
-      img.Image decodedImage;
-      if (inputImage.metadata?.format == InputImageFormat.bgra8888) {
-        decodedImage = decodeBGRA8888(inputImage);
-      } else if (inputImage.metadata?.format == InputImageFormat.nv21) {
-        decodedImage = decodeYUV420SP(inputImage);
-      } else {
-        return;
-      }
+      var prediction = predictions[faces.indexOf(face)] as List<dynamic>;
       
-      final img.Image croppedImage = img.copyCrop(
-          decodedImage,
-          x: face.boundingBox.left.toInt(),
-          y: face.boundingBox.top.toInt(),
-          width: face.boundingBox.width.toInt().abs(),
-          height: face.boundingBox.height.toInt().abs(),
-        );
-      
-      final prediction = modelPrediction.predictImage(croppedImage);
       int emotionIndex = 0;
-      emotionIndex = _argmax(prediction); 
-      
-      
-      
+      emotionIndex = _argmax(prediction[0]); 
       final textPainter = TextPainter(
         text: TextSpan(
-          text: '${emotions[emotionIndex]}',
+          text: emotions[emotionIndex],
           style: TextStyle(color: colors[emotionIndex], fontSize: 24),
         ),
         textDirection: TextDirection.ltr,

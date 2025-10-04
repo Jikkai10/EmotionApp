@@ -26,12 +26,24 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
   String? _text;
   var _cameraLensDirection = CameraLensDirection.front;
   final modelPrediction = ModelPrediction();
+  var _counter = 0;
+  var _predictions = <int, Object>{};
 
   @override
-  void dispose() {
+  void initState() {
+    super.initState();
+    modelPrediction.results.listen((event) {
+      _predictions = event;
+    });
+  }
+
+  @override
+  void dispose() async{
     _canProcess = false;
     _faceDetector.close();
+    
     super.dispose();
+    await modelPrediction.dispose();
   }
 
   @override
@@ -58,18 +70,18 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
     final faces = await _faceDetector.processImage(inputImage);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
-       
+      _counter++;
       
-      
-      
-      
+      if(_counter % 5 == 0){
+        modelPrediction.predictImage(inputImage, faces);
+        _counter = 0;
+      }
       final painter = FaceDetectorPainter(
         faces,
         inputImage.metadata!.size,
         inputImage.metadata!.rotation,
         _cameraLensDirection,
-        inputImage,
-        modelPrediction,
+        _predictions,
       );
       _customPaint = CustomPaint(painter: painter);
     } else {
