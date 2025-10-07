@@ -21,9 +21,9 @@ Foi usado apenas 5 emoções, com 3171 imagens de treino para cada, sendo elas:
 - Triste
 - Surpreso
 
-O modelo apresentou $\approx 70\%$ de acurácia ao final do treino.
+O modelo apresentou $\approx 70\\%$ de acurácia ao final do treino.
 
-Após converter o modelo para tflite, para ser usado em aplicativos mobile, a acurácia caiu para $\approx 62\%$.
+Após converter o modelo para tflite, para ser usado em aplicativos mobile, a acurácia caiu para $\approx 62\\%$.
 
 ## Detecção Facial
 
