@@ -1,9 +1,10 @@
 # EmotionApp
 
 Aplicação em Flutter para reconhecimento de emoções através da imagem capturada pela câmera.
-<div style="text-align: center;">
+
+<p align="center">
  <img src="./assets/images/imagem_feliz.jpeg" width="`150" height="200">
-</div>
+</p>
 
 
 ## Modelo
