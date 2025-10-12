@@ -1,9 +1,10 @@
 # EmotionApp
 
 Aplicação em Flutter para reconhecimento de emoções através da imagem capturada pela câmera.
-<div style="text-align: center;">
+
+<p align="center">
  <img src="./assets/images/imagem_feliz.jpeg" width="`150" height="200">
-</div>
+</p>
 
 
 ## Modelo
@@ -20,9 +21,9 @@ Foi usado apenas 5 emoções, com 3171 imagens de treino para cada, sendo elas:
 - Triste
 - Surpreso
 
-O modelo apresentou $\approx 70\%$ de acurácia ao final do treino.
+O modelo apresentou $\approx 70\\%$ de acurácia ao final do treino.
 
-Após converter o modelo para tflite, para ser usado em aplicativos mobile, a acurácia caiu para $\approx 62\%$.
+Após converter o modelo para tflite, para ser usado em aplicativos mobile, a acurácia caiu para $\approx 62\\%$.
 
 ## Detecção Facial
 
