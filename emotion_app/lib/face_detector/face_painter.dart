@@ -66,10 +66,12 @@ class FaceDetectorPainter extends CustomPainter {
         rotation,
         cameraLensDirection,
       );
+      var index = faces.indexOf(face);
       if(predictions.isEmpty) continue;
-      if(predictions.length < faces.length) continue;
       
-      var prediction = predictions[faces.indexOf(face)] as List<dynamic>;
+      if(predictions.length <= index) continue;
+      
+      var prediction = predictions[index] as List<dynamic>;
       
       int emotionIndex = 0;
       emotionIndex = _argmax(prediction[0]); 

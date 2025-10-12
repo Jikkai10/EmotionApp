@@ -51,7 +51,11 @@ class ModelPrediction {
     // }
 
     try{
-      await _isolateInterpreter!.runForMultipleInputs(processedImages, output);
+      // problema com runForMultipleInputs
+      for (var i = 0; i < processedImages.length; i++){
+        await _isolateInterpreter!.run(processedImages[i], output[i] as Object);
+      }
+      
       _resultController.add(output);
     }finally{
       _inferenceCompleter?.complete();
