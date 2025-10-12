@@ -72,7 +72,7 @@ class _FaceDetectorViewState extends State<FaceDetectorView> {
         inputImage.metadata?.rotation != null) {
       _counter++;
       
-      if(_counter % 5 == 0){
+      if(_counter % 5 == 0 && faces.isNotEmpty){
         modelPrediction.predictImage(inputImage, faces);
         _counter = 0;
       }
